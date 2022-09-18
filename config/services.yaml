@@ -31,8 +31,10 @@ services:
     admin.category:
         class: App\Admin\CategoryAdmin
         arguments: [~, App\Entity\Category, ~]
+        calls:
+            - [ setTemplate, [ 'edit', 'CategoryAdmin/edit.html.twig' ] ]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Category }
+            - { name: sonata.admin, manager_type: orm, group: 'Content', label: Category }
     admin.product:
         class: App\Admin\ProductAdmin
         arguments: [ ~, App\Entity\Product, ~ ]
