@@ -14,7 +14,7 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
-    locale: vn|en|ru
-    requirements:
-        _locale: vn|en|ru
-        _format: html|xml
+    locale: vn
+#    requirements:
+#        _locale: vi|en
+#        _format: html|xml
