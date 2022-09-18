@@ -5,6 +5,11 @@ sonata_admin:
             - { type: sonata.admin.block.admin_list, position: left }
     options:
         legacy_twig_text_extension: false
+    assets:
+        extra_stylesheets:
+            - bundles/sonatatranslation/css/sonata-translation.css
+    templates:
+        layout: '@SonataTranslation/standard_layout.html.twig'
 
 sonata_block:
     blocks:

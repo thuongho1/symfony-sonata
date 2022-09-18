@@ -10,3 +10,5 @@
 #  resource: "@CategoryBundle/Controller/CategoryController.php"
 #  prefix:   /category
 #  type:     annotation
+sonata_translation:
+  resource: '@SonataTranslationBundle/Resources/config/routes.yaml'
