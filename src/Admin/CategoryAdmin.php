@@ -12,6 +12,7 @@ final class CategoryAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('name', TextType::class);
+        $formMapper->add('≈', TextType::class);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
