@@ -8,8 +8,8 @@ sonata_block:
         sonata_translation.block.locale_switcher: null
 
 sonata_translation:
-    locales: [en, fr, it, nl, es]
-    default_locale: en
+    locales: [en, vi]
+    default_locale: vi
     locale_switcher: true
         # change default behavior for translated field filtering.
 #    default_filter_mode: gedmo # must be either 'gedmo' or 'knplabs', default: gedmo
