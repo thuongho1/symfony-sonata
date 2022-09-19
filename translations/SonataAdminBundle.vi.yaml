@@ -1,0 +1,4 @@
+btn_update_and_edit_again: 'Chinh sua'
+link_delete: 'Xoa'
+flash_edit_success: Item "%name%" duoc chinh sua thanh cong
+flash_create_success: Item "%name%" duoc tao thanh cong

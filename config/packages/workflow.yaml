@@ -1,0 +1,29 @@
+framework:
+    workflows:
+        product:
+            type: state_machine
+            marking_store:
+                type: single_state
+                arguments:
+                    - status
+            supports:
+                - App\Entity\Product
+            places:
+                - draft
+                - pending_review
+                - pending_update
+                - published
+            initial_place: draft
+            transitions:
+                start_review:
+                    from: draft
+                    to: pending_review
+                interrupt_review:
+                    from: pending_review
+                    to: pending_update
+                restart_review:
+                    from: pending_update
+                    to: pending_review
+                publish:
+                    from: pending_review
+                    to: published

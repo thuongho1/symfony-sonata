@@ -8,7 +8,7 @@ sonata_block:
         sonata_translation.block.locale_switcher: null
 
 sonata_translation:
-    locales: [en, vi]
+    locales: '%app.supported_locales%'
     default_locale: vi
     locale_switcher: true
         # change default behavior for translated field filtering.

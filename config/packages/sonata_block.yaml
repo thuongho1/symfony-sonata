@@ -1,2 +1,8 @@
 sonata_block:
-    http_cache: false
+    blocks:
+        sonata.page.block.container:
+            cache: sonata.cache.memcached
+    http_cache:
+        handler: sonata.block.cache.handler.noop    # no cache alteration
+#        handler: sonata.block.cache.handler.default # default value
+        listener: true

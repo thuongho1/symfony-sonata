@@ -30,10 +30,19 @@ class Product
     private $price;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $status;
+
+    /**
      * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="products")
      */
     private $categories;
-
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Version
+     */
+    protected $version;
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -67,7 +76,17 @@ class Product
 
         return $this;
     }
+    public function getVersion(): ?float
+    {
+        return $this->version;
+    }
 
+    public function setVersion(int $version): self
+    {
+        $this->version = $version;
+
+        return $this;
+    }
     /**
      * @return Collection<int, Category>
      */
@@ -94,4 +113,16 @@ class Product
 
         return $this;
     }
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
 }

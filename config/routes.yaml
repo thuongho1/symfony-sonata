@@ -2,13 +2,13 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-#product:
-#  resource: "@ProductBundle/Controller/ProductController.php"
-#  prefix:   /product
-#  type:     annotation
-#category:
-#  resource: "@CategoryBundle/Controller/CategoryController.php"
-#  prefix:   /category
-#  type:     annotation
 sonata_translation:
   resource: '@SonataTranslationBundle/Resources/config/routes.yaml'
+
+gallery:
+  resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
+  prefix: /media/gallery
+
+media:
+  resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
+  prefix: /media
