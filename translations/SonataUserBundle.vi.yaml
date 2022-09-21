@@ -1,0 +1,5 @@
+sonata_user: 'Nguoi dung'
+groups: 'Nhom'
+users: 'Nguoi dung'
+breadcrumb:
+    link_sonata_user_user_list: 'Danh sach nguoi dung'

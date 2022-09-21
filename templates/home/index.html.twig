@@ -1,0 +1,23 @@
+{% extends 'react.html.twig' %}
+{#{% block content %}#}
+{#    <div {{ stimulus_controller('mychart') }}></div>#}
+{#    <div {{ stimulus_controller('hello') }}>#}
+{#        <input data-hello-target="name" type="text">#}
+
+{#        <button data-action="click->hello#greet">#}
+{#            Greet#}
+{#        </button>#}
+
+{#        <span data-hello-target="output">#}
+{#  </span>#}
+{#    </div>#}
+{#    {{ render_chart(chart, {'data-controller': 'mychart'}) }}#}
+{#{% endblock %}#}
+
+{# templates/home.html.twig #}
+
+{% block body  %}
+{#    <div id="root"></div>#}
+    <div {{ react_component('Home', { 'fullName': app.user.fullName }) }}></div>
+{#    {{ render_chart(chart, {'data-controller': 'mychart'}) }}#}
+{% endblock %}

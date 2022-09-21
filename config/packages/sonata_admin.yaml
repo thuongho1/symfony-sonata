@@ -11,7 +11,7 @@ sonata_admin:
 
         # acl security information
         information:
-            STAFF:    [EDIT, LIST, CREATE]
+            STAFF:    [VIEW, EDIT, LIST, CREATE]
             EDITOR:   [OPERATOR, EXPORT]
             ADMIN:    [MASTER]
 
@@ -28,14 +28,23 @@ sonata_admin:
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
-#        groups:
-#            app.admin.group.content:
-#                label: app.admin.group.content
-#                label_catalogue: App
-#            app.admin.group.commerce:
-#                label: Commerce
-#                icon: 'fa fa-image' # html is also supported
-#            app.admin.group.misc: ~
+        groups:
+            admin_commerce:
+                label: ~
+                icon: 'fa fa-image'
+#                keep_open: true
+                items: ~
+            admin_misc: ~
+            sonata_media: ~
+            sonata_user: ~
+            test:
+                label: Test
+                icon: 'fa fa-image'
+                keep_open: true
+                items:
+                    - route: admin_test
+                      label: Test
+
 
     options:
         legacy_twig_text_extension: false

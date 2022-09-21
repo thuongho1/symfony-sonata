@@ -6,3 +6,6 @@ sonata_block:
         handler: sonata.block.cache.handler.noop    # no cache alteration
 #        handler: sonata.block.cache.handler.default # default value
         listener: true
+#    profiler:
+#        enabled: '%kernel.debug%'
+#        template: '@SonataBlock/Profiler/block.html.twig'

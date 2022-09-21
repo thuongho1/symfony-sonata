@@ -334,6 +334,12 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/ux-chartjs": {
+        "version": "v2.4.0"
+    },
+    "symfony/ux-react": {
+        "version": "v2.4.0"
+    },
     "symfony/validator": {
         "version": "4.4",
         "recipe": {
@@ -361,6 +367,25 @@
             "config/routes/dev/web_profiler.yaml"
         ]
     },
+    "symfony/webpack-encore-bundle": {
+        "version": "1.15",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.9",
+            "ref": "f466b6384e592cfda11ca2361bbf7c7287b58f55"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/bootstrap.js",
+            "assets/controllers.json",
+            "assets/controllers/hello_controller.js",
+            "assets/styles/app.css",
+            "config/packages/webpack_encore.yaml",
+            "package.json",
+            "webpack.config.js"
+        ]
+    },
     "symfony/workflow": {
         "version": "4.4",
         "recipe": {
@@ -372,5 +397,8 @@
         "files": [
             "config/packages/workflow.yaml"
         ]
+    },
+    "twig/extra-bundle": {
+        "version": "v3.4.0"
     }
 }

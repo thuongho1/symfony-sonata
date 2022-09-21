@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,13 +31,18 @@ class ProductController extends AbstractController
      */
     public function new(Request $request, ProductRepository $productRepository): Response
     {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
+        try{
+            $product = new Product();
+            $form = $this->createForm(ProductType::class, $product);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->add($product);
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $productRepository->add($product);
+                return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+        } catch (Exception $e){
+            dd($e->getMessage());
         }
 
         return $this->render('product/new.html.twig', [

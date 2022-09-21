@@ -3,17 +3,22 @@
 namespace App\Service;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+
 
 class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
 {
-    protected $container;
-
-    public function __construct($container)
+    protected $router;
+    private $security;
+    public function __construct(Security $security, UrlGeneratorInterface $router)
     {
-        $this->container = $container;
+        $this->security = $security;
+        $this->router = $router;
+
     }
 
     /**
@@ -21,12 +26,9 @@ class AuthenticationHandler implements AuthenticationSuccessHandlerInterface
      * */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $user = $token->getUser();
-        if ($user->hasRole('ROLE_USER') || $user->hasRole('ROLE_SUPER_ADMIN')) {
-            $url = $this->container->get('router')->generate('sonata_admin_dashboard');
+        if ($this->security->isGranted('ROLE_USER')) {
+            $url = $this->router->generate('sonata_admin_dashboard');
+            return new RedirectResponse($url);
         }
-
-        return new RedirectResponse($url);
-
     }
 }

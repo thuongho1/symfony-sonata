@@ -33,7 +33,6 @@ services:
     # please note that last definitions always *replace* previous ones
     admin_success_handler:
         class: App\Service\AuthenticationHandler
-        arguments: ['@service_container']
     app.menu_listener:
         class: App\EventListener\MenuBuilderListener
         tags:
@@ -45,20 +44,23 @@ services:
 #        calls:
 #            - [ setTemplate, [ 'edit', 'category/edit.html.twig' ] ]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: Category, label: Category, pager_type: 'default' , on_top: true, icon: 'fa fa-image' }
+            - { name: sonata.admin, manager_type: orm, group: admin_commerce, label: Category, pager_type: 'default' , icon: 'fa fa-image', keep_open: true }
     app.admin.product:
         class: App\Admin\ProductAdmin
         arguments:
             - ~
             - App\Entity\Product
-            - App\Controller\ProductAdminController
+#            - App\Controller\ProductAdminController
             - Yokai\SonataWorkflow\Controller\WorkflowController
         tags:
-            - {name: sonata.admin, manager_type: orm, group: Commerce,  label: Product}
+            - {name: sonata.admin, manager_type: orm, group: admin_commerce,  label: Product}
         public: true
-
+    Yokai\SonataWorkflow\Controller\WorkflowController:
+        autowire: true
+        tags: ['controller.service_arguments']
     app.admin.extension.workflow.product:
         class: Yokai\SonataWorkflow\Admin\Extension\WorkflowExtension
+        public: true
         arguments:
             - '@workflow.registry'
             - transitions_icons:

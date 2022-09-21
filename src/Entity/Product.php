@@ -35,7 +35,7 @@ class Product
     private $status;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="products")
+     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="products", fetch="EXTRA_LAZY")
      */
     private $categories;
     /**

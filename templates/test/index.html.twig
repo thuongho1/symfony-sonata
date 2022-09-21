@@ -1,0 +1,54 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block list_table %}
+    <div class="col-xs-12 col-md-12">
+        <h1>Hello ✅</h1>
+        <div class="box box-primary">
+            <div class="box-body table-responsive no-padding">
+                {% if results|length > 0 %}
+                    {% block table %}
+                        <table class="table table-bordered table-striped table-hover sonata-ba-list">
+                            {% block table_header %}
+                                <thead>
+                                <tr class="sonata-ba-list-field-header">
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+
+                                </tr>
+                                </thead>
+                            {% endblock %}
+
+                            {% block table_body %}
+                                <tbody>
+                                {% for result in results %}
+                                    <tr>
+                                        <td>{{ result.id }}</td>
+                                        <td>{{ result.name }}</td>
+                                        <td>{{ result.price }}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            {% endblock %}
+                            {% block table_footer %}
+
+                            {% endblock %}
+                        </table>
+
+                    {% endblock %}
+                    {% else %}
+                    {% block no_result_content %}
+                    {% endblock %}
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
