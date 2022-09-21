@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Admin;
 
+use App\Entity\Category;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -9,11 +11,24 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class CategoryAdmin extends AbstractAdmin
 {
+    protected $baseRoutePattern = 'category';
+    public function toString($object)
+    {
+        return $object instanceof Category
+            ? $object->getName()
+            : 'Category'; // shown in the breadcrumb on the create view
+    }
     protected function configureFormFields(FormMapper $formMapper)
     {
-        $formMapper->add('name', TextType::class);
-        $formMapper->add('≈', TextType::class);
+        $formMapper
+            ->add('name', TextType::class);
+//            ->add('slug', TextType::class);
     }
+//
+//    public function prePersist($object)
+//    {
+//dump($object);
+//    }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
@@ -22,6 +37,9 @@ final class CategoryAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('name');
+        $listMapper
+            ->addIdentifier('id')
+            ->addIdentifier('name')
+            ->addIdentifier('slug');
     }
 }

@@ -1,0 +1,9 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block title %}<h1>Page not found</h1>{% endblock %}
+{% block content %}
+    <div>
+        The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('sonata_admin_dashboard') }}">return to the homepage</a>.
+    </div>
+{% endblock %}

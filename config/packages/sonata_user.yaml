@@ -1,0 +1,9 @@
+# config/packages/sonata_user.yaml
+sonata_user:
+    security_acl: true
+    manager_type: orm
+    class:
+        user: App\Entity\SonataUserUser
+        group: App\Entity\SonataUserGroup
+    impersonating:
+        route: sonata_admin_dashboard

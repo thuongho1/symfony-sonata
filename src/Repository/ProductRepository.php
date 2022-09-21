@@ -47,6 +47,33 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+
+    /**
+     * @return Product[]|null
+     *  Returns an array of Product objects
+     */
+    public function findAllGreaterThanPrice($price)
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        $queryBuilder->where('p.price >= :price')
+            ->setParameter('price', $price)
+            ->orderBy('p.price', 'DESC');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+//    public function findWithCategoryId($categoryId)
+//    {
+//        $queryBuilder = $this->createQueryBuilder('p');
+//        $queryBuilder
+//            ->join('product_categpory')
+//            ->where('p.c');
+//
+//        return $queryBuilder->getQuery()->getResult();
+//
+//    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */
