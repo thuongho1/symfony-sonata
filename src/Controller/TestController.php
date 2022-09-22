@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,7 @@ class TestController extends AbstractController
     }
 
     /**
-     * @Route("/test", name="admin_test")
+     * @Route("/test", name="admin_test_1")
      */
     public function test2(Request $request, CategoryRepository $categoryRepository): Response
     {
@@ -60,13 +61,33 @@ class TestController extends AbstractController
         ]);
     }
     /**
-     * @Route("/test", name="admin_test")
+     * @Route("/test2", name="admin_test_2")
      */
-    public function index2(Request $request): Response
+    public function index2(Request $request, LoggerInterface $logger): Response
     {
         $query = $request->getQueryString();
+        $logger->info('I just got the logger');
+        $logger->error('An error occurred');
+
+        $logger->critical('I left the oven on!', [
+            // include extra "context" info in your logs
+            'cause' => 'in_hurry',
+        ]);
+
         $price = $request->get('price') ?: 10;
         $results = $this->productRepository->find($price);
+
+        return $this->render('test/index.html.twig', [
+            'results' => $results,
+        ]);
+    }
+    /**
+     * @Route("/test3", name="admin_test_3")
+     */
+    public function index3(Request $request, LoggerInterface $logger): Response
+    {
+
+        $results = $this->productRepository->findAll();
 
         return $this->render('test/index.html.twig', [
             'results' => $results,

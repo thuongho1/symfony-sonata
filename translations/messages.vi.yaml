@@ -11,3 +11,11 @@ gallery: 'Bo suu tap'
 users: 'nguoi dung'
 sonata_user: 'Nguoi dung'
 groups: 'Nhom'
+product: San Pham
+category: Loai
+delete: Delete
+admin_commerce: 'Thuong mai'
+description: Description
+price: Price
+name: Name
+id: ID

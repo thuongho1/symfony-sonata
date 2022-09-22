@@ -11,12 +11,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class CategoryAdmin extends AbstractAdmin
 {
-    protected $baseRoutePattern = 'category';
+//    protected $baseRoutePattern = 'category';
     public function toString($object)
     {
         return $object instanceof Category
             ? $object->getName()
-            : 'Category'; // shown in the breadcrumb on the create view
+            : $this->translator->trans('category'); // shown in the breadcrumb on the create view
     }
     protected function configureFormFields(FormMapper $formMapper)
     {

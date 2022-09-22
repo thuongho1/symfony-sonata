@@ -21,10 +21,10 @@ sonata_admin:
 
         # permission related to the objects
         object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
-    breadcrumbs:
-        # use this to change the default route used to generate the link
-        # to the parent object inside a breadcrumb, when in a child admin
-        child_admin_route: show
+#    breadcrumbs:
+#        # use this to change the default route used to generate the link
+#        # to the parent object inside a breadcrumb, when in a child admin
+#        child_admin_route: show
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
@@ -34,17 +34,10 @@ sonata_admin:
                 icon: 'fa fa-image'
 #                keep_open: true
                 items: ~
-            admin_misc: ~
+
+##            admin_misc: ~<
             sonata_media: ~
             sonata_user: ~
-            test:
-                label: Test
-                icon: 'fa fa-image'
-                keep_open: true
-                items:
-                    - route: admin_test
-                      label: Test
-
 
     options:
         legacy_twig_text_extension: false

@@ -6,11 +6,14 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Translatable\Translatable;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
-class Product
+class Product implements Translatable
 {
     /**
      * @ORM\Id
@@ -20,6 +23,7 @@ class Product
     private $id;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -28,7 +32,17 @@ class Product
      * @ORM\Column(type="float")
      */
     private $price;
-
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text")
+     */
+    private $description;
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -43,6 +57,7 @@ class Product
      * @ORM\Version
      */
     protected $version;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -76,6 +91,22 @@ class Product
 
         return $this;
     }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
     public function getVersion(): ?float
     {
         return $this->version;
@@ -87,6 +118,7 @@ class Product
 
         return $this;
     }
+
     /**
      * @return Collection<int, Category>
      */
@@ -113,6 +145,7 @@ class Product
 
         return $this;
     }
+
     public function getStatus(): ?string
     {
         return $this->status;

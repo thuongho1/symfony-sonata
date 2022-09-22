@@ -6,6 +6,7 @@ namespace App\Admin;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -16,20 +17,21 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 final class ProductAdmin extends AbstractAdmin
 {
     protected $baseRoutePattern = 'product';
+
     public function toString($object)
     {
         return $object instanceof Product
             ? $object->getName()
-            : 'Product'; // shown in the breadcrumb on the create view
+            : $this->translator->trans('product'); // shown in the breadcrumb on the create view
     }
+
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
             ->add('id')
             ->add('name')
             ->add('price')
-            ->add('version')
-            ;
+            ->add('version');
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -51,22 +53,24 @@ final class ProductAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-                    ->with('Content')
+            ->with('Content')
             ->add('name')
             ->add('price')
-//            ->add('version')
-                        ->end()
-                        ->with('Meta data')
-                        ->add('categories', EntityType::class, array(
-                            'class' => Category::class,
-                            'multiple' => true,
-                            'expanded' => true,
-                            'choice_label' => 'name',
-                            'placeholder' => 'Select a value',
-                            'empty_data' => null,
-                            'by_reference' => false,
-                        ))
-                        ->end();
+            ->add('description', CKEditorType::class)
+            //            ->add('version')
+            ->end()
+            ->with('Meta data')
+//            ->add('locale')
+            ->add('categories', EntityType::class, array(
+                'class' => Category::class,
+                'multiple' => true,
+                'expanded' => true,
+                'choice_label' => 'name',
+                'placeholder' => 'Select a value',
+                'empty_data' => null,
+                'by_reference' => false,
+            ))
+            ->end();
     }
 
     protected function configureShowFields(ShowMapper $show): void
@@ -75,7 +79,6 @@ final class ProductAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('price')
-            ->add('version')
-            ;
+            ->add('version');
     }
 }

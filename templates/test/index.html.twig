@@ -13,10 +13,10 @@
                             {% block table_header %}
                                 <thead>
                                 <tr class="sonata-ba-list-field-header">
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-
+                                    <th>{{ 'id'|trans }}</th>
+                                    <th>{{ 'name'|trans }}</th>
+                                    <th>{{ 'price'|trans }}</th>
+                                    <th>{{ 'description'|trans }}</th>
                                 </tr>
                                 </thead>
                             {% endblock %}
@@ -28,10 +28,11 @@
                                         <td>{{ result.id }}</td>
                                         <td>{{ result.name }}</td>
                                         <td>{{ result.price }}</td>
+                                        <td>{{ result.description }}</td>
                                     </tr>
                                 {% else %}
                                     <tr>
-                                        <td colspan="4">no records found</td>
+                                        <td colspan="4">{{ 'no_records_found'|trans({}, 'SonataAdminBundle') }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -42,7 +43,7 @@
                         </table>
 
                     {% endblock %}
-                    {% else %}
+                {% else %}
                     {% block no_result_content %}
                     {% endblock %}
                 {% endif %}
