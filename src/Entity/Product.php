@@ -2,47 +2,30 @@
 
 namespace App\Entity;
 
+use App\Entity\Common\IdTrait;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Translatable\Translatable;
-use Gedmo\Mapping\Annotation as Gedmo;
-
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
-class Product implements Translatable
+class Product implements TranslatableInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @Gedmo\Translatable
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    use TranslatableTrait;
+    use IdTrait;
 
     /**
      * @ORM\Column(type="float")
      */
     private $price;
-    /**
-     * @Gedmo\Translatable
-     * @ORM\Column(type="text")
-     */
-    private $description;
-    /**
-     * @Gedmo\Locale
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property
-     */
-    private $locale;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -58,28 +41,26 @@ class Product implements Translatable
      */
     protected $version;
 
+    /**
+     * @Assert\Valid
+     */
+    protected $translations;
+//private $translator;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+//        $this->translator = $translator;
     }
-
-    public function getId(): ?int
+    public function __call($method, $arguments)
     {
-        return $this->id;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), $method);
     }
 
-    public function getName(): ?string
+    public function __toString()
     {
-        return $this->name;
+        return $this->getName() ?: 'Product'; // shown in the breadcrumb on the create view
     }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getPrice(): ?float
     {
         return $this->price;
@@ -92,20 +73,16 @@ class Product implements Translatable
         return $this;
     }
 
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
+//    public function setDescription($description)
+//    {
+//        $this->description = $description;
+//    }
+//
+//    public function getDescription()
+//    {
+//        return $this->description;
+//    }
 
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
-    }
 
     public function getVersion(): ?float
     {
@@ -157,5 +134,8 @@ class Product implements Translatable
 
         return $this;
     }
-
+//    public function getName()
+//    {
+//        return $this->translate()->getName();
+//    }
 }

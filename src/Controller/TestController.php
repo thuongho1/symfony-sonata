@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Psr\Log\LoggerInterface;
+use Sonata\AdminBundle\Templating\TemplateRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends AbstractController
 {
     private $productRepository;
+    /**
+     * @var string|null
+     */
+    private $baseTemplate;
 
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, TemplateRegistry $templateRegistry)
     {
         $this->productRepository = $productRepository;
-
+        $this->baseTemplate = $templateRegistry->getTemplate('layout');
     }
 
     /**
@@ -26,12 +31,14 @@ class TestController extends AbstractController
     public function index(Request $request): Response
     {
         $query = $request->getQueryString();
-        $price = $request->get('price') ?: 10;
+        $id = $request->get('id') ?: 1;
 
-        $results = $this->productRepository->findAll();
-        $results = $this->productRepository->findAllGreaterThanPrice($price);
+//        $results = $this->productRepository->findAll();
+//        $results = $this->productRepository->findAllGreaterThanPrice($price);
+        $results = $this->productRepository->findJoin($id);
 
         return $this->render('test/index.html.twig', [
+            'base_template' => $this->baseTemplate,
             'results' => $results,
         ]);
     }
@@ -57,6 +64,7 @@ class TestController extends AbstractController
 
 
         return $this->render('test/index.html.twig', [
+            'base_template' => $this->baseTemplate,
             'results' => $results,
         ]);
     }
@@ -90,6 +98,7 @@ class TestController extends AbstractController
         $results = $this->productRepository->findAll();
 
         return $this->render('test/index.html.twig', [
+            'base_template' => $this->baseTemplate,
             'results' => $results,
         ]);
     }

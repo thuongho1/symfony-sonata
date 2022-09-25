@@ -1,6 +1,5 @@
 framework:
-    default_locale: vi
+    default_locale: '%app.default_locale%'
     translator:
         default_path: '%kernel.project_dir%/translations'
-        fallbacks:
-            - en
+        fallbacks: '%app.fallback_locales%'

@@ -9,7 +9,7 @@ sonata_block:
 
 sonata_translation:
     locales: '%app.supported_locales%'
-    default_locale: vi
+    default_locale: '%app.default_locale%'
     locale_switcher: true
         # change default behavior for translated field filtering.
 #    default_filter_mode: gedmo # must be either 'gedmo' or 'knplabs', default: gedmo

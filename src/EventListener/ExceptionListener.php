@@ -24,11 +24,11 @@ class ExceptionListener implements EventSubscriberInterface
     {
         // You get the exception object from the received event
         $exception = $event->getThrowable();
-//        $message = dd(
-//            'My Error says: %s with code: %s',
-//            $exception->getMessage(),
-//            $exception->getCode()
-//        );
+        $message = dump(
+            $exception->getMessage(),
+            $exception->getCode(),
+            $exception
+        );
     }
 
     public function logException(ExceptionEvent $event)

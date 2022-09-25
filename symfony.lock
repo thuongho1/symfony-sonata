@@ -75,6 +75,9 @@
             "config/packages/prod/jms_serializer.yaml"
         ]
     },
+    "knplabs/doctrine-behaviors": {
+        "version": "2.2.0"
+    },
     "knplabs/knp-menu-bundle": {
         "version": "v3.2.0"
     },
@@ -298,6 +301,18 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
+    },
+    "symfony/messenger": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "25e3c964d3aee480b3acc3114ffb7940c89edfed"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
     },
     "symfony/routing": {
         "version": "4.4",

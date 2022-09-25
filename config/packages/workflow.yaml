@@ -1,6 +1,6 @@
 framework:
     workflows:
-        product:
+        editorial:
             type: state_machine
             marking_store:
                 type: single_state

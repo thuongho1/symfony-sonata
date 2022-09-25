@@ -2,30 +2,27 @@
 
 namespace App\Entity;
 
+use App\Entity\Common\IdTrait;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Translatable\Translatable;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface as KnpTranslatorInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class Category implements Translatable
+class Category implements KnpTranslatorInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    use TranslatableTrait;
+    use IdTrait;
 
     /**
      * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="categories", fetch="EXTRA_LAZY")
@@ -33,38 +30,29 @@ class Category implements Translatable
     private $products;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     * @Gedmo\Slug(fields={"name"})
-     */
-    private $slug;
-
-    /**
      * @ORM\Column(type="integer")
      * @ORM\Version
      */
     protected $version;
-    public function __construct()
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(TranslatorInterface $translator)
     {
         $this->products = new ArrayCollection();
+       $this->translator =  $translator;
     }
 
-    public function getId(): ?int
+    public function __call($method, $arguments)
     {
-        return $this->id;
+        return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), $method);
     }
-
-    public function getName(): ?string
+    public function __toString()
     {
-        return $this->name;
+        return $this->getName() ?: ''; // shown in the breadcrumb on the create view
     }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Product>
      */
@@ -89,24 +77,8 @@ class Category implements Translatable
         return $this;
     }
 
-    public function getSlug(): ?string
+    public function getName()
     {
-        return $this->slug;
+        return $this->translate()->getName();
     }
-//    /**
-//     * @ORM\PrePersist
-//     * @ORM\PreUpdate
-//     */
-//    public function setSlug() {
-//        $tmpslug = (string)$this->id."-";
-//        $tmpslug = $this->slugify($this->title);
-//
-//        $this->slug = $tmpslug;
-//    }
-//    public function setSlug(string $slug): self
-//    {
-//        $this->slug = $slug;
-//
-//        return $this;
-//    }
 }
