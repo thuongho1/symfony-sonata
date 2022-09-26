@@ -1,5 +1,5 @@
 <?php
-namespace Zoe\TestBundle;
+namespace App\TestBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

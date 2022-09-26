@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Message\SmsNotification;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Psr\Log\LoggerInterface;
@@ -9,6 +10,7 @@ use Sonata\AdminBundle\Templating\TemplateRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
@@ -28,8 +30,11 @@ class TestController extends AbstractController
     /**
      * @Route("/test", name="admin_test")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, MessageBusInterface $bus): Response
     {
+        // will cause the SmsNotificationHandler to be called
+//        $bus->dispatch(new SmsNotification('Look! I created a message!'));
+
         $query = $request->getQueryString();
         $id = $request->get('id') ?: 1;
 
