@@ -63,6 +63,15 @@ class ProductRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findJoin($categoryId = 1)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->leftJoin('p.categories', 'c')
+        ->andWhere('c.id = :categoryId')
+        ->setParameter('categoryId', $categoryId);
+
+        return $qb->getQuery()->getResult();
+}
 //    public function findWithCategoryId($categoryId)
 //    {
 //        $queryBuilder = $this->createQueryBuilder('p');

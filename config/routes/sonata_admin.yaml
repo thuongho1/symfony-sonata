@@ -11,7 +11,7 @@ admin_area:
     prefix: /admin
 
 _sonata_admin:
-    resource: .
+    resource: "../../src/Admin"
     type: sonata_admin
     prefix: /admin
     requirements:

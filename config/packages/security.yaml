@@ -12,7 +12,7 @@ security:
             security: false
         # -> custom firewall for the admin area of the URL
         admin:
-            pattern:            /admin(.*)
+            pattern:             .*
             context:            user
             form_login:
                 provider:       fos_userbundle
@@ -32,17 +32,17 @@ security:
 
         # This firewall is used to handle the public login area
         # This part is handled by the FOS User Bundle
-        main:
-            pattern:             .*
-            context:             user
-            form_login:
-                provider:       fos_userbundle
-                login_path:     /login
-                use_forward:    false
-                check_path:     /login_check
-                failure_path:   null
-            logout:             true
-            anonymous:          true
+#        main:
+#            pattern:             .*
+#            context:             user
+#            form_login:
+#                provider:       fos_userbundle
+#                login_path:     /login
+#                use_forward:    false
+#                check_path:     /login_check
+#                failure_path:   null
+#            logout:             true
+#            anonymous:          true
             # https://symfony.com/doc/current/security/impersonating_user.html
             #switch_user: true
 #    role_hierarchy:

@@ -7,3 +7,6 @@ sonata_user:
         group: App\Entity\SonataUserGroup
     impersonating:
         route: sonata_admin_dashboard
+    admin:
+        user:
+            class: App\Admin\UserAdmin

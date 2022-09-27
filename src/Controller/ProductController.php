@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Exception;
+use Sonata\AdminBundle\Templating\TemplateRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,28 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductController extends AbstractController
 {
+
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+    /**
+     * @var string|null
+     */
+    private $baseTemplate;
+
+    public function __construct(ProductRepository $productRepository, TemplateRegistry $templateRegistry)
+    {
+        $this->productRepository = $productRepository;
+        $this->baseTemplate = $templateRegistry->getTemplate('layout');
+    }
     /**
      * @Route("/", name="app_product_index", methods={"GET"})
      */
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
+            'base_template' => $this->baseTemplate,
             'products' => $productRepository->findAll(),
         ]);
     }
@@ -46,6 +63,7 @@ class ProductController extends AbstractController
         }
 
         return $this->render('product/new.html.twig', [
+            'base_template' => $this->baseTemplate,
             'product' => $product,
             'form' => $form->createView(),
         ]);
@@ -57,6 +75,7 @@ class ProductController extends AbstractController
     public function show(Product $product): Response
     {
         return $this->render('product/show.html.twig', [
+            'base_template' => $this->baseTemplate,
             'product' => $product,
         ]);
     }
@@ -75,6 +94,7 @@ class ProductController extends AbstractController
         }
 
         return $this->render('product/edit.html.twig', [
+            'base_template' => $this->baseTemplate,
             'product' => $product,
             'form' => $form->createView(),
         ]);

@@ -1,0 +1,18 @@
+services:
+    app.admin.product:
+        class: App\Admin\ProductAdmin
+        arguments:
+            - ~
+            - App\Entity\Product
+            - Yokai\SonataWorkflow\Controller\WorkflowController
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: 'admin_commerce',  label: Product}
+        public: true
+    app.admin.category:
+        #        autowire: true
+        class: App\Admin\CategoryAdmin
+        arguments: [~, App\Entity\Category, ~]
+        #        calls:
+        #            - [ setTemplate, [ 'edit', 'cate`gory/edit.html.twig' ] ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Commerce', label: Category }

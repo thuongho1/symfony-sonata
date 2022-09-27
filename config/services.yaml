@@ -5,7 +5,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     sonata.admin.security.mask.builder.class: Sonata\AdminBundle\Security\Acl\Permission\MaskBuilder
-    app.supported_locales: ['en', 'vi']
+    app.supported_locales: ['en', 'vi', 'ru']
+    app.default_locale: 'vi'
+    app.fallback_locales: ['en']
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -18,9 +20,9 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
+            - '../src/Admin/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
@@ -33,32 +35,11 @@ services:
     # please note that last definitions always *replace* previous ones
     admin_success_handler:
         class: App\Service\AuthenticationHandler
-    app.menu_listener:
-        class: App\EventListener\MenuBuilderListener
-        tags:
-            - { name: kernel.event_listener, event: sonata.admin.event.configure.menu.sidebar, method: addMenuItems }
-    app.admin.category:
-#        autowire: true
-        class: App\Admin\CategoryAdmin
-        arguments: [~, App\Entity\Category, App\Controller\AdminCategoryController]
-#        calls:
-#            - [ setTemplate, [ 'edit', 'category/edit.html.twig' ] ]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: admin_commerce, label: Category, pager_type: 'default' , icon: 'fa fa-image', keep_open: true }
-    app.admin.product:
-        class: App\Admin\ProductAdmin
-        arguments:
-            - ~
-            - App\Entity\Product
-#            - App\Controller\ProductAdminController
-            - Yokai\SonataWorkflow\Controller\WorkflowController
-        tags:
-            - {name: sonata.admin, manager_type: orm, group: admin_commerce,  label: Product}
-        public: true
+
     Yokai\SonataWorkflow\Controller\WorkflowController:
         autowire: true
         tags: ['controller.service_arguments']
-    app.admin.extension.workflow.product:
+    app.admin.extension.workflow.editorial:
         class: Yokai\SonataWorkflow\Admin\Extension\WorkflowExtension
         public: true
         arguments:
@@ -68,3 +49,6 @@ services:
                   interrupt_review: fa fa-edit
                   restart_review: fa fa-question
                   publish: fa fa-check
+imports:
+    # this will show an error if 'parameters.yaml' exists but contains syntax errors
+    - { resource: 'services_admin.yaml', ignore_errors: 'not_found' }

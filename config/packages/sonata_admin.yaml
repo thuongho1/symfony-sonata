@@ -1,7 +1,7 @@
 sonata_admin:
     title: 'Sonata Admin'
     security:
-        handler: sonata.admin.security.handler.acl
+        handler: sonata.admin.security.handler.role
 
         # this service MUST implement ``Sonata\AdminBundle\Util\AdminAclUserManagerInterface``.
         acl_user_manager: App\Manager\AclUserManager
@@ -11,10 +11,26 @@ sonata_admin:
 
         # acl security information
         information:
-            STAFF:    [VIEW, EDIT, LIST, CREATE]
-            EDITOR:   [OPERATOR, EXPORT]
-            ADMIN:    [MASTER]
+            OWNER: [OWNER]
+            EDIT:
+                - EDIT
+            LIST:
+                - LIST
+            CREATE:
+                - CREATE
+            VIEW:
+                - VIEW
+            DELETE:
+                - DELETE
+            EXPORT:
+                - EXPORT
+            ALL:
+                - ALL
 
+#            STAFF:    [VIEW, LIST, CREATE, EDIT ]
+#            EDITOR:   [OPERATOR, EXPORT, OWNER]
+#            ADMIN:    [MASTER]
+#        staff_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
         # permissions not related to an object instance and also to be available when objects do not exist
         # the DELETE admin permission means the user is allowed to batch delete objects
         admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
@@ -28,23 +44,31 @@ sonata_admin:
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
+#            - { type: user_block, roles: [ROLE_USER]}
         groups:
+#            id:
+#                label: ~
+#                label_catalogue: ~
+#                icon: ~
+#                provider: ~
+#                items:
+#                    admin: ~
+#                    label: ~
+#                    route: ~
+#                    route_params: ~
+#                item_adds: []
+#                roles: []
             admin_commerce:
                 label: ~
                 icon: 'fa fa-image'
-#                keep_open: true
-                items: ~
-            admin_misc: ~
-            sonata_media: ~
-            sonata_user: ~
-            test:
-                label: Test
-                icon: 'fa fa-image'
                 keep_open: true
                 items:
-                    - route: admin_test
-                      label: Test
+                    - app.admin.product
+                    - app.admin.category
 
+##            admin_misc: ~<
+            sonata_media: ~
+            sonata_user: ~
 
     options:
         legacy_twig_text_extension: false
@@ -52,14 +76,14 @@ sonata_admin:
 
     assets:
         extra_stylesheets:
+            - build/app.css
             - bundles/sonatatranslation/css/sonata-translation.css
     templates:
-        layout: '@SonataTranslation/standard_layout.html.twig'
+        layout: 'Admin/standard_layout.html.twig'
     extensions:
-        app.admin.extension.workflow.product:
+        app.admin.extension.workflow.editorial:
             admins:
                 - app.admin.product
-
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:

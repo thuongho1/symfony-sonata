@@ -1,6 +1,10 @@
 # config/packages/sonata_media.yaml
 
 sonata_media:
+#    admin:
+#        groupicon: 'fa fa-user'
+#        media:
+#            groupicon: 'fa fa-user'
     providers:
         image:
             resizer: sonata.media.resizer.square
