@@ -1,5 +1,7 @@
 ### Code
 .idea
+.DS_Store
+src/.DS_Store
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
